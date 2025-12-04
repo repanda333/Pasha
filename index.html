@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page Kelompok</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ====== 1. VARIABEL & RESET ====== */
+        :root {
+            --biru: #2563EB;       /* Warna Utama */
+            --biru-gelap: #1e40af; 
+            --hijau: #10B981;      
+            --putih: #ffffff;
+            --abu-terang: #f3f4f6;
+            --teks-utama: #1f2937;
+            --teks-pudar: #6b7280;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--putih);
+            color: var(--teks-utama);
+            line-height: 1.6;
+        }
+
+        /* Utility Class */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--biru);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--teks-pudar);
+        }
+
+        /* ====== BAGIAN MOSAIC TIM (DIPERBARUI) ====== */
+        .team-mosaic-section {
+            padding: 80px 0 100px 0; /* Padding bawah ditambah sedikit */
+            /* PERUBAHAN DISINI: Gradasi Biru ke Putih */
+            background: linear-gradient(180deg, var(--biru) 0%, var(--putih) 100%);
+            color: var(--putih);
+        }
+
+        .mosaic-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .mosaic-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--putih); /* Teks putih agar kontras dengan background biru */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .mosaic-header p {
+            color: #e0f2fe; /* Biru sangat muda */
+            font-size: 1.1rem;
+        }
+
+        /* --- GRID LAYOUT --- */
+        .mosaic-grid {
+            display: flex;
+            margin-top: 20px;
+            height: auto;
+            align-items: center;
+            width: 400;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 200px;
+            gap: 15px;
+        }
+
+        /* --- ITEM STYLES --- */
+        .mosaic-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .mosaic-item:hover {
+            transform: scale(1.02);
+            z-index: 2;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .mosaic-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: filter 0.3s;
+        }
+
+        /* Ukuran Spesial */
+        .mosaic-item.large { grid-column: span 2; grid-row: span 2; }
+        .mosaic-item.wide { grid-column: span 2; }
+        .mosaic-item.medium { grid-column: span 1; }
+
+        /* KOTAK QUOTE */
+        .quote-box {
+            background: #ffffff; /* Ubah jadi putih agar bersih */
+            color: var(--biru);  /* Teks jadi biru */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            grid-column: span 1;
+            grid-row: span 1;
+            border: 2px solid var(--abu-terang);
+        }
+
+        .quote-box blockquote {
+            font-size: 1.1rem;
+            font-weight: bold;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        /* OVERLAY HOVER EFFECT */
+        .overlay {
+            position: relative;
+            bottom: 0;
+            left: 0;
+            align-items: center;
+            height: 200;
+            width: 400;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .mosaic-item:hover .overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .overlay h3 {
+            color: #fff;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .overlay p {
+            color: #ddd;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* ====== 2. NAVBAR ====== */
+        .navbar {
+            background: var(--putih);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 180px;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--teks-utama);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--biru);
+        }
+
+        /* ====== 3. HERO SECTION ====== */
+        .hero-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+
+        .hero-text { flex: 1; }
+        .hero-text h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--teks-utama);
+        }
+        .hero-text span { color: var(--biru); }
+        .hero-text p {
+            margin-bottom: 30px;
+            color: var(--teks-pudar);
+            font-size: 1.1rem;
+        }
+        .hero-image { flex: 1; }
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary {
+            background-color: var(--biru);
+            color: var(--putih);
+            box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
+        }
+        .btn-primary:hover {
+            background-color: var(--biru-gelap);
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--biru);
+            border: 2px solid var(--biru);
+            margin-left: 10px;
+        }
+        .btn-secondary:hover {
+            background-color: var(--biru);
+            color: var(--putih);
+        }
+
+        /* ====== 4. PROGRAM SECTION ====== */
+           .program-y {
+            padding: 80px 0;
+            margin-bottom: 30px;
+            background-color: var(--putih)
+           }
+
+        .program-section {
+            padding: 80px 0;
+            background-color: var(--putih);
+        }
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .card-program {
+            background: var(--abu-terang);
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .card-program:hover {
+            transform: translateY(-10px);
+            background: white;
+            box-shadow: var(--shadow);
+        }
+        .card-program .icon { font-size: 3rem; margin-bottom: 20px; }
+        .card-program h3 { margin-bottom: 10px; color: var(--teks-utama); }
+
+        /* ====== 5. TIM SECTION ====== */
+        .tim-section {
+            padding: 80px 0;
+            background-color: #f9fafb;
+        }
+        .tim-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        .card-anggota {
+            background: var(--putih);
+            width: 280px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-top: 5px solid var(--biru);
+        }
+        .card-anggota:hover {
+            transform: translateY(-10px);
+            border-top-color: var(--hijau);
+        }
+        .foto-wrapper {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--abu-terang);
+        }
+        .foto-anggota {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-anggota h3 { font-size: 1.25rem; margin-bottom: 5px; }
+        .card-anggota .jabatan {
+            color: var(--hijau);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        .card-anggota .deskripsi { font-size: 0.9rem; color: var(--teks-pudar); }
+
+        /* ====== 6. FOOTER ====== */
+        footer {
+            background: var(--teks-utama);
+            color: var(--putih);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        /* ====== RESPONSIVE (HP) ====== */
+        @media (max-width: 768px) {
+            .hero-content { flex-direction: column-reverse; text-align: center; }
+            .hero-text h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .nav-wrapper { justify-content: center; }
+            
+            .mosaic-grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: 250px;
+            }
+            .mosaic-item.large, .mosaic-item.wide, .mosaic-item.medium, .quote-box {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .hero {
+              max-width: 1200px;
+              margin: 0 auto;
+              padding: 0 20px;
+            }
+
+
+             .tag {
+                display: inline-block;
+                background: rgba(0, 0, 0, 0.05);
+                padding: 8px 18px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin-bottom: 20px;
+                letter-spacing: 0.5px;
+                color: #555;
+             }
+        }
+    </style>
+</head>
+<body>
+
+ <nav class="navbar">
+        <div class="container nav-wrapper">
+            <img src="/img/mutu.png" alt="Mutu" class="logo">
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#program">Program</a></li>
+                <li><a href="#tim">Tim Kami</a></li>
+            </ul>
+        </div>
+    </nav>
+       
+     <section id="program" class="program-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>WELCOME TO DUNIA TEKNOLOGI INFORMASI</h2>
+                <p>Ciptakan Kresi Dan Inovasi Di masa Depan</p>
+            </div>
+                <div class="mosaic-item large">                  
+                    <img src="/img/cover.jpg" alt="Foto Bersama">                       
+                </section>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <header id="home" class="hero-section">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Inovasi Bersama Untuk <span>Masa Depan</span></h1>
+                <p>Kami adalah kelompok yang berdedikasi untuk menciptakan solusi digital yang bermanfaat, kreatif, dan berdampak positif bagi lingkungan sekitar.</p>
+                <a href="#program" class="btn btn-primary">Lihat Program</a>
+                <a href="#tim" class="btn btn-secondary">Kenalan Yuk</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/500x350" alt="Ilustrasi Teamwork">
+            </div>
+        </div>
+    </header>
+
+    <section id="program" class="program-y">
+        <div class="container">
+            <div class="section-title">
+                <h2>Program Unggulan</h2>
+                <p>Fokus utama proyek yang sedang kami kerjakan</p>
+            </div>
+            <div class="program-grid">
+                <div class="card-program">
+                    <div class="icon">💻</div>
+                    <h3>Server & Sistem operasi</h3>
+                    <p>konfigurasi server Linux/Windows,DHCP,DNS,FTP,web server dan layanan jaringan lainnya.</p>
+                </div>
+                <div class="card-program">
+                    <div class="icon">🔒</div>
+                    <h3>keamanan jaringan</h3>
+                    <p>Mempelajari firewall,serangan jaringan dasar,enkripsi,dan bagaimana menjaga sistem tetap aman.</p>
+                </div>
+                <div class="card-program">
+                    <div class="icon">💡</div>
+                    <h3>Internet of Things (IoT)</h3>Membuat dan menghubungkan perangkat pinter seperti sensor,kamera IP,dan otomasi rumah
+                    <p>i.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tim" class="tim-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tim Kami</h2>
+                <p>Orang-orang hebat di balik proyek ini</p>
+            </div>
+
+            <div class="tim-container">
+                <div class="card-anggota">
+                    <div class="foto-wrapper">
+                        <img src="https://via.placeholder.com/150" alt="Foto Ketua" class="foto-anggota">
+                    </div>
+                    <h3>pasha agustian</h3>
+                    <p class="jabatan">anggota</p>
+                    <p class="deskripsi">Bertanggung jawab atas manajemen proyek dan koordinasi tim.</p>
+                </div>
+
+                <div class="card-anggota">
+                    <div class="foto-wrapper">
+                        <img src="https://via.placeholder.com/150" alt="Foto Anggota" class="foto-anggota">
+                    </div>
+                    <h3>dewi permata sari</h3>
+                    <p class="jabatan">anggota</p>
+                    <p class="deskripsi">Mengelola dokumentasi dan administrasi kegiatan kelompok.</p>
+                </div>
+
+             
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2024 Nama Kelompok. Dibuat dengan semangat belajar.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
